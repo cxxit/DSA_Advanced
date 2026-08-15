@@ -1,3 +1,9 @@
+"""
+List ADT.
+
+Reference:
+FIT3155 lecture materials, Monash University.
+"""
 from abc import ABC, abstractmethod
 from typing import TypeVar, Generic
 T = TypeVar('T')
