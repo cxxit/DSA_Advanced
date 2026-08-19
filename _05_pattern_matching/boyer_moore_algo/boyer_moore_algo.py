@@ -5,7 +5,7 @@
             # -> preprocess pat to store for each character in sigma the rightmost position of the occurence of character x in pat
             # store position R(x) 
             # when x does not occur in pat R(x) = 0 
-def preprocess_bad_char_shift_data_structure(pat): 
+def preprocess_bad_char_shift_data_structure_naive(pat): 
     """_summary_
     Space Complexity: O(|Sigma|), rightmost_arr, stores sigma length, where sigma denotes number of alphabet
     Time Complexity: O(m + |Sigma|), depending on the length of the pat and the number of alphabet, 
@@ -28,7 +28,7 @@ def bad_char_shift_rule(txt, pat):
     1. Right to left scan until a mismatch is found
 
     """
-    rightmost_occ_arr = preprocess_bad_char_shift_data_structure(pat) 
+    rightmost_occ_arr = preprocess_bad_char_shift_data_structure_naive(pat) 
     mismatch = False
     j_start = 0
     j = j_start + len(pat) - 1 
@@ -57,14 +57,14 @@ def bad_char_shift_rule(txt, pat):
             print(ord(mistmach_letter_txt)-97, mistmach_letter_txt, r_x)
             if r_x == None: 
                 j_start = j_start + len(pat)
-                
+
             # do a shift using the r_x
             elif r_x < i:
                 print(j_start + i - r_x, "new_j_start")
                 if j_start + r_x > len(txt) - 1 or j_start + i - r_x + len(pat) - 1 > len(txt) - 1: 
                     return "no pat found in txt"
                 j_start = j_start + i - r_x
-            else: 
+            else: # shift naively 
                 j_start = j_start + 1
             j = j_start + len(pat) - 1 
             i = len(pat) - 1
