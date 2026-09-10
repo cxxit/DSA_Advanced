@@ -30,51 +30,31 @@ def good_suffix_shift_arr(pat):
         good_suffix_arr[j] = p
     return good_suffix_arr # goodsuffix arr is based on zero based indexing
 
+def boyer_moore(txt, pat):
+    rightmost_occ_arr = preprocess_bad_char_shift_data_structure_extended(pat) 
     j_start = 0
     j = j_start + len(pat) - 1 
     i = len(pat) - 1
 
-    while j_start < len(txt):
-        # for hehe in range(20):
-        # while j>=0 and i>=0 and mismatch == False:
+    while j < len(txt):
         while i>=0:
             if txt[j] != pat[i]: 
-                mismatch = True 
-                print(txt[j], pat[i], f"mismatch at k (index at pat): {i}, x (index at txt): {j_start + i}")
                 break
-            print(txt[j], pat[i])
             j -= 1
             i -= 1
-        if i >= 0 and mismatch == True: 
-        # get r_x value, r_x represents right most index of letter x in pat 
-        # 1. we need to know the letter in txt which mistmatch occured 
-            # get letter in txt which mismatch occured 
-            mistmatch_index = j_start + i
-            print(mistmatch_index,"mismatch index")
-            mistmach_letter_txt = txt[mistmatch_index]
-            r_x = rightmost_occ_arr[ord(mistmach_letter_txt)-97] # 97 = ord("a")
-            print(rightmost_occ_arr)
-            print(ord(mistmach_letter_txt)-97, mistmach_letter_txt, r_x)
-            if r_x == None: 
-                j_start = j_start + len(pat)
+        if i >= 0: 
+            mistmatch_index_txt = j_start + i
+            mistmach_letter_txt = txt[mistmatch_index_txt]
+            r_x = rightmost_occ_arr[i][ord(mistmach_letter_txt)-97] # 97 = ord("a")
 
-            # do a shift using the r_x
-            elif r_x < i:
-                print(j_start + i - r_x, "new_j_start")
-                if j_start + r_x > len(txt) - 1 or j_start + i - r_x + len(pat) - 1 > len(txt) - 1: 
-                    return "no pat found in txt"
-                j_start = j_start + i - r_x
-            else: # shift naively 
-                j_start = j_start + 1
+            shift_amount = extended_bad_char_shift_rule(i,r_x, len(pat))
+            j_start = j_start + shift_amount
             j = j_start + len(pat) - 1 
             i = len(pat) - 1
-            mismatch = False
-
-        else: # i is less than zero denotes that a full match is found
+        else: # i == -1
             return "full match found"
-
     return "no pat found in txt"
-        
+
 
 def boyer_moore():
    pass
