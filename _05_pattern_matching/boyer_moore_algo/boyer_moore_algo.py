@@ -143,8 +143,13 @@ def boyer_moore(txt, pat):
             j_start = j_start + shift_amount
             j = j_start + len(pat) - 1 
             i = len(pat) - 1
-        else: # i == -1
-            return "full match found"
+        else: # i == -1, Case 2: full match is found
+            matched_index_arr.append(j+1)
+            shift_amount = len(pat) - matched_prefix_arr[1]
+            j_start = j_start + shift_amount
+            j = j_start + len(pat) -  1  
+            i = len(pat) - 1
+
     return "no pat found in txt"
 
 
