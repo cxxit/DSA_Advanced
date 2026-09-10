@@ -77,8 +77,8 @@ def good_suffix_shift_arr(pat):
 
     z_suffix_arr = computeZSuffixValues(pat)
 
-    for p in range(len(good_suffix_arr) - 2): 
-        j = len(pat) - z_suffix_arr[p] + 1  - 1 # minus one to make it zero indexing
+    for p in range(0, len(pat)-1): 
+        j = len(pat) - z_suffix_arr[p] # minus one to make it zero indexing
         good_suffix_arr[j] = p
     return good_suffix_arr # goodsuffix arr is based on zero based indexing
 
