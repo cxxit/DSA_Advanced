@@ -113,6 +113,7 @@ def matched_prefix_shift_arr(pat):
     return matched_prefix_shift_arr
 
 def boyer_moore(txt, pat):
+    matched_index_arr = []
     rightmost_occ_arr = preprocess_bad_char_shift_data_structure_extended(pat) 
     j_start = 0
     j = j_start + len(pat) - 1 
