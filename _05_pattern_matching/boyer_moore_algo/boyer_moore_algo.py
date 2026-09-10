@@ -1,15 +1,22 @@
-# Strucutre of Boyer Moore Algorithm 
-    # Proprocessing phase (performed once at the start of the algo):
-        # preprocess pat to obtain 3 data structures to support each shift rule 
-            # bad character shift rule data structures
-            # -> preprocess pat to store for each character in sigma the rightmost position of the occurence of character x in pat
-            # store position R(x) 
-            # when x does not occur in pat R(x) = 0 
-def preprocess_bad_char_shift_data_structure_naive(pat): 
-    """_summary_
-    Space Complexity: O(|Sigma|), rightmost_arr, stores sigma length, where sigma denotes number of alphabet
-    Time Complexity: O(m + |Sigma|), depending on the length of the pat and the number of alphabet, 
-                     total time to store 0 in rightmost_arr and total time to compute frequency of each letters in the patter
+def preprocess_bad_char_shift_data_structure_extended(pat): 
+    rightmost_matrix = [] # initialise matrix
+    rightmost_arr = [None] * 26 # initialise rightmost_arr storing rightmost index of each character in pat
+    rightmost_matrix.append(rightmost_arr) # append initial rightmost_arr as at index 0, no characters is to the left of the character at index 0
+    for i in range(1,len(pat)):
+        rightmost_arr = [None] * 26
+        for j in range(0,i): 
+            letter = pat[j]
+            letter_index = ord(letter) - 97
+            rightmost_arr[letter_index] = j
+        rightmost_matrix.append(rightmost_arr)
+    return rightmost_matrix
+
+
+def extended_bad_char_shift_rule(i, r_x, pat_length): 
+    """
+    j: current index traversing in txt
+    i: current index traversing in pat
+
     Args:
         pat (_type_): _description_
     """
