@@ -82,6 +82,19 @@ def good_suffix_shift_arr(pat):
         good_suffix_arr[j] = p
     return good_suffix_arr # goodsuffix arr is based on zero based indexing
 
+def good_suffix_rule(pat, mismatch_index): 
+    good_suffix_arr = good_suffix_shift_arr(pat)
+    matched_prefix_arr = matched_prefix_shift_arr(pat)
+    shift_amount = None 
+    if mismatch_index + 1 >= len(pat): 
+        return None
+    if good_suffix_arr[mismatch_index + 1] > 0: #Case 1a
+        shift_amount = len(pat) - good_suffix_arr[mismatch_index + 1]
+    elif good_suffix_arr[mismatch_index + 1] == 0: #Case 1b
+        shift_amount = len(pat) - matched_prefix_arr[mismatch_index + 1]
+
+    return shift_amount
+
 def matched_prefix_shift_arr(pat): 
     z_suffix_arr = computeZSuffixValues(pat)
     print(z_suffix_arr)
