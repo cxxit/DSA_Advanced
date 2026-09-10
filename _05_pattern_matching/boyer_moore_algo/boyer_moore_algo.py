@@ -71,39 +71,23 @@ def computeZSuffixValues(pat):
     return z_suffix_arr
 
 
-def good_suffix_shift_arr(pat): 
+def good_suffix_shift_arr(pat, zsuffix_arr): 
     # initialise the array with 
     good_suffix_arr = [0] *  (len(pat) + 1)
 
-    z_suffix_arr = computeZSuffixValues(pat)
 
     for p in range(0, len(pat)-1): 
-        j = len(pat) - z_suffix_arr[p] # minus one to make it zero indexing
+        j = len(pat) - zsuffix_arr[p] # minus one to make it zero indexing
         good_suffix_arr[j] = p
     return good_suffix_arr # goodsuffix arr is based on zero based indexing
 
-def good_suffix_rule(pat, mismatch_index): 
-    good_suffix_arr = good_suffix_shift_arr(pat)
-    matched_prefix_arr = matched_prefix_shift_arr(pat)
-    shift_amount = None 
-    if mismatch_index + 1 >= len(pat): 
-        return None
-    if good_suffix_arr[mismatch_index + 1] > 0: #Case 1a
-        shift_amount = len(pat) - good_suffix_arr[mismatch_index + 1]
-    elif good_suffix_arr[mismatch_index + 1] == 0: #Case 1b
-        shift_amount = len(pat) - matched_prefix_arr[mismatch_index + 1]
-
-    return shift_amount
-
-def matched_prefix_shift_arr(pat): 
-    z_suffix_arr = computeZSuffixValues(pat)
-
+def matched_prefix_shift_arr(pat, zsuffix_arr): 
     # obtain matched prefix 
     matched_prefix_shift_arr_unreversed = []
-    largest_value = z_suffix_arr[0] # initialise largest value as first element in z_suffix_arr
-    for i in range(len(z_suffix_arr) - 1): 
-        if z_suffix_arr[i] > largest_value: 
-            largest_value = z_suffix_arr[i]
+    largest_value = zsuffix_arr[0] # initialise largest value as first element in z_suffix_arr
+    for i in range(len(zsuffix_arr) - 1): 
+        if zsuffix_arr[i] > largest_value: 
+            largest_value = zsuffix_arr[i]
         matched_prefix_shift_arr_unreversed.append(largest_value)
     matched_prefix_shift_arr = []
     for j in range(len(matched_prefix_shift_arr_unreversed)-1,-1,-1): 
@@ -112,10 +96,25 @@ def matched_prefix_shift_arr(pat):
 
     return matched_prefix_shift_arr
 
+def good_suffix_rule(pat, mismatch_index, goodsuffix_arr, matchedprefix_arr): 
+    # good_suffix_arr = good_suffix_shift_arr(pat)
+    # matched_prefix_arr = matched_prefix_shift_arr(pat)
+    shift_amount = None 
+    if mismatch_index + 1 >= len(pat): 
+        return None
+    if goodsuffix_arr[mismatch_index + 1] > 0: #Case 1a
+        shift_amount = len(pat) - goodsuffix_arr[mismatch_index + 1]
+    elif goodsuffix_arr[mismatch_index + 1] == 0: #Case 1b
+        shift_amount = len(pat) - matchedprefix_arr[mismatch_index + 1]
+
+    return shift_amount
+
 def boyer_moore(txt, pat):
     matched_index_arr = []
     rightmost_occ_arr = preprocess_bad_char_shift_data_structure_extended(pat) 
-    matched_prefix_arr = matched_prefix_shift_arr(pat)
+    zsuffix_arr = computeZSuffixValues(pat)
+    goodsuffix_arr = good_suffix_shift_arr(pat, zsuffix_arr)
+    matchedprefix_arr = matched_prefix_shift_arr(pat, zsuffix_arr)
 
     j_start = 0
     j = j_start + len(pat) - 1 
@@ -133,7 +132,7 @@ def boyer_moore(txt, pat):
             r_x = rightmost_occ_arr[i][ord(mistmach_letter_txt)-97] # 97 = ord("a")
 
             s_badcharacter = extended_bad_char_shift_rule(i, r_x)
-            s_goodsuffix = good_suffix_rule(pat, i)
+            s_goodsuffix = good_suffix_rule(pat, i, goodsuffix_arr, matchedprefix_arr)
 
             if s_goodsuffix is None: 
                 shift_amount = s_badcharacter
@@ -145,25 +144,27 @@ def boyer_moore(txt, pat):
             i = len(pat) - 1
         else: # i == -1, Case 2: full match is found
             matched_index_arr.append(j+1)
-            shift_amount = len(pat) - matched_prefix_arr[1]
+            shift_amount = len(pat) - matchedprefix_arr[1]
             j_start = j_start + shift_amount
             j = j_start + len(pat) -  1  
             i = len(pat) - 1
 
     return matched_index_arr
 
+def boyer_moore_galil(txt, pat): 
 
+    return 
 
 if __name__ == "__main__": # runs when you run this python file directly, but not when the file is imported as a module
-    txt = "abxyzxyzxyzcdefxyz"
-    pat = "xyz"
+    txt = "abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde"
+    pat = "abcdeabcdeabcde"
     arr = preprocess_bad_char_shift_data_structure_extended(pat)
     for ele in arr: 
         print(ele)
         print()
     print()
-    print(computeZSuffixValues(pat))
-    print(matched_prefix_shift_arr(pat))
+    # print(computeZSuffixValues(pat))
+    # print(matched_prefix_shift_arr(pat))
     print(boyer_moore(txt, pat))
     # preprocess_bad_char_shift_data_structure("hehe")
     # print(preprocess_bad_char_shift_data_structure_extended("tbapxb"))
