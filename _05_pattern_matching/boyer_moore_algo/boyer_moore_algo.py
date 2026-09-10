@@ -70,6 +70,7 @@ def computeZSuffixValues(pat):
     z_suffix_arr.append(None)
     return z_suffix_arr
 
+
 def good_suffix_shift_arr(pat): 
     # initialise the array with 
     good_suffix_arr = [0] *  (len(pat) + 1)
@@ -80,6 +81,24 @@ def good_suffix_shift_arr(pat):
         j = len(pat) - z_suffix_arr[p] + 1  - 1 # minus one to make it zero indexing
         good_suffix_arr[j] = p
     return good_suffix_arr # goodsuffix arr is based on zero based indexing
+
+def matched_prefix_shift_arr(pat): 
+    z_suffix_arr = computeZSuffixValues(pat)
+    print(z_suffix_arr)
+
+    # obtain matched prefix 
+    matched_prefix_shift_arr_unreversed = []
+    largest_value = z_suffix_arr[0] # initialise largest value as first element in z_suffix_arr
+    for i in range(len(z_suffix_arr) - 1): 
+        if z_suffix_arr[i] > largest_value: 
+            largest_value = z_suffix_arr[i]
+        matched_prefix_shift_arr_unreversed.append(largest_value)
+    matched_prefix_shift_arr = []
+    for j in range(len(matched_prefix_shift_arr_unreversed)-1,-1,-1): 
+        matched_prefix_shift_arr.append(matched_prefix_shift_arr_unreversed[j])
+    matched_prefix_shift_arr.append(0)
+
+    return matched_prefix_shift_arr
 
 def boyer_moore(txt, pat):
     rightmost_occ_arr = preprocess_bad_char_shift_data_structure_extended(pat) 
@@ -107,12 +126,13 @@ def boyer_moore(txt, pat):
     return "no pat found in txt"
 
 
-def boyer_moore():
-   pass
-
 
 if __name__ == "__main__": # runs when you run this python file directly, but not when the file is imported as a module
-    txt = "abcdefheheheheehxyz"
-    pat = "xyz"
-    print(bad_char_shift_rule(txt, pat))
+    # txt = "abcdefzxyz"
+    # pat = "xyz"
+    # print(boyer_moore(txt, pat))
+    # preprocess_bad_char_shift_data_structure("hehe")
+    # print(preprocess_bad_char_shift_data_structure_extended("tbapxb"))
+    # print(computeZSuffixValues("abaaabacbaabaaab"))
+    print(matched_prefix_shift_arr("acababacaba"))
 
