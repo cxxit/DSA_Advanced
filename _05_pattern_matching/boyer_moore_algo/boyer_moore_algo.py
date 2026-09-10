@@ -12,7 +12,7 @@ def preprocess_bad_char_shift_data_structure_extended(pat):
     return rightmost_matrix
 
 
-def extended_bad_char_shift_rule(i, r_x, pat_length): 
+def extended_bad_char_shift_rule(i, r_x): 
     """
     j: current index traversing in txt
     i: current index traversing in pat
@@ -24,13 +24,13 @@ def extended_bad_char_shift_rule(i, r_x, pat_length):
     Returns:
         _type_: _description_
     """
+    print(f"inside function r_x: {r_x}")
     if r_x == None: # if the letter mismatched in the txt is not in the pat, we shift the len(pat)
-        shift_amount = pat_length
-    # do a shift using the r_x
-    elif r_x < i:
+        shift_amount = i + 1
+
+    else:
         shift_amount = i - r_x
-    # else: # shift extended 
-    #     shift_amount = 1
+
     return shift_amount
 
 def computeZSuffixValues(pat): 
