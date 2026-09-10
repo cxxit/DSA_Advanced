@@ -18,7 +18,21 @@ def extended_bad_char_shift_rule(i, r_x, pat_length):
     i: current index traversing in pat
 
     Args:
+        txt (_type_): _description_
         pat (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    if r_x == None: # if the letter mismatched in the txt is not in the pat, we shift the len(pat)
+        shift_amount = pat_length
+    # do a shift using the r_x
+    elif r_x < i:
+        shift_amount = i - r_x
+    # else: # shift extended 
+    #     shift_amount = 1
+    return shift_amount
+
 def computeZSuffixValues(pat): 
     z_value_arr = [] 
     reverse_pat = ""
