@@ -97,7 +97,6 @@ def good_suffix_rule(pat, mismatch_index):
 
 def matched_prefix_shift_arr(pat): 
     z_suffix_arr = computeZSuffixValues(pat)
-    print(z_suffix_arr)
 
     # obtain matched prefix 
     matched_prefix_shift_arr_unreversed = []
@@ -109,7 +108,7 @@ def matched_prefix_shift_arr(pat):
     matched_prefix_shift_arr = []
     for j in range(len(matched_prefix_shift_arr_unreversed)-1,-1,-1): 
         matched_prefix_shift_arr.append(matched_prefix_shift_arr_unreversed[j])
-    matched_prefix_shift_arr.append(0)
+    matched_prefix_shift_arr.append(0) # based on the slides 
 
     return matched_prefix_shift_arr
 
