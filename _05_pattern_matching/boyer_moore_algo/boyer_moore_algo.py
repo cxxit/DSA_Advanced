@@ -19,24 +19,17 @@ def extended_bad_char_shift_rule(i, r_x, pat_length):
 
     Args:
         pat (_type_): _description_
-    """
-    rightmost_arr = [None] * 26 # there is 26 letters in english language, Space Complexity: O(|Sigma|)
+def good_suffix_shift_arr(pat): 
+    # initialise the array with 
+    good_suffix_arr = [0] *  (len(pat) + 1)
 
-    for i in range(len(pat)):
-    # for letter in pat: 
-        letter_index = ord(pat[i]) - 97
-        # print(letter_index)
-        rightmost_arr[letter_index] = i # this updates the arr to store the right most position of each letter in pat 
+    z_suffix_arr = computeZSuffixValues(pat)
 
-    return rightmost_arr
+    for p in range(len(good_suffix_arr) - 2): 
+        j = len(pat) - z_suffix_arr[p] + 1  - 1 # minus one to make it zero indexing
+        good_suffix_arr[j] = p
+    return good_suffix_arr # goodsuffix arr is based on zero based indexing
 
-def bad_char_shift_rule(txt, pat): 
-    """Implementation of Bad Character Shift Rule
-    1. Right to left scan until a mismatch is found
-
-    """
-    rightmost_occ_arr = preprocess_bad_char_shift_data_structure_naive(pat) 
-    mismatch = False
     j_start = 0
     j = j_start + len(pat) - 1 
     i = len(pat) - 1
