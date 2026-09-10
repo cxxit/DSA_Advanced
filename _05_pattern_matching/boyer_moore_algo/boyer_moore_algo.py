@@ -150,16 +150,23 @@ def boyer_moore(txt, pat):
             j = j_start + len(pat) -  1  
             i = len(pat) - 1
 
-    return "no pat found in txt"
+    return matched_index_arr
 
 
 
 if __name__ == "__main__": # runs when you run this python file directly, but not when the file is imported as a module
-    # txt = "abcdefzxyz"
-    # pat = "xyz"
-    # print(boyer_moore(txt, pat))
+    txt = "abxyzxyzxyzcdefxyz"
+    pat = "xyz"
+    arr = preprocess_bad_char_shift_data_structure_extended(pat)
+    for ele in arr: 
+        print(ele)
+        print()
+    print()
+    print(computeZSuffixValues(pat))
+    print(matched_prefix_shift_arr(pat))
+    print(boyer_moore(txt, pat))
     # preprocess_bad_char_shift_data_structure("hehe")
     # print(preprocess_bad_char_shift_data_structure_extended("tbapxb"))
     # print(computeZSuffixValues("abaaabacbaabaaab"))
-    print(matched_prefix_shift_arr("acababacaba"))
+    # print(matched_prefix_shift_arr("aaa"))
 
