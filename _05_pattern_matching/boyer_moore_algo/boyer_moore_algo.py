@@ -132,7 +132,14 @@ def boyer_moore(txt, pat):
             mistmach_letter_txt = txt[mistmatch_index_txt]
             r_x = rightmost_occ_arr[i][ord(mistmach_letter_txt)-97] # 97 = ord("a")
 
-            shift_amount = extended_bad_char_shift_rule(i,r_x, len(pat))
+            s_badcharacter = extended_bad_char_shift_rule(i, r_x)
+            s_goodsuffix = good_suffix_rule(pat, i)
+
+            if s_goodsuffix is None: 
+                shift_amount = s_badcharacter
+            else: 
+                shift_amount = max(s_badcharacter,s_goodsuffix)
+
             j_start = j_start + shift_amount
             j = j_start + len(pat) - 1 
             i = len(pat) - 1
