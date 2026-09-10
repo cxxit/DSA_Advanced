@@ -19,6 +19,43 @@ def extended_bad_char_shift_rule(i, r_x, pat_length):
 
     Args:
         pat (_type_): _description_
+def computeZSuffixValues(pat): 
+    z_value_arr = [] 
+    reverse_pat = ""
+    for i in range(len(pat)-1,-1,-1):
+        reverse_pat += pat[i]
+    # print(f"reverse_pat: {reverse_pat}")
+
+    # use gusfield algo on the reversed pattern 
+    z_value_arr.append(len(pat))
+    # print(f"first instance of z_suffix_arr:{z_value_arr}")
+    i = 0
+    current_index = 1
+    j = current_index
+    while current_index < len(reverse_pat): 
+        count = 0
+        i = 0
+        j = current_index
+        # print(f"current index: {current_index}")
+        # print(f"i: {i}, Scurrent index: {current_index}, j: {j}, {reverse_pat}, {reverse_pat[j]}")
+        while j < len(reverse_pat): 
+            # print(f"reverse_pat[i] == reverse_pat[j]: {reverse_pat[i] == reverse_pat[j]}")
+            if reverse_pat[i] == reverse_pat[j]:
+                count += 1
+                j += 1 
+                i += 1
+            else: 
+                break
+        z_value_arr.append(count)
+        current_index += 1
+
+    # reverse the values in the z_value_arr
+    z_suffix_arr = []
+    for i in range(len(z_value_arr)-1,-1,-1): 
+        z_suffix_arr.append(z_value_arr[i])
+    z_suffix_arr.append(None)
+    return z_suffix_arr
+
 def good_suffix_shift_arr(pat): 
     # initialise the array with 
     good_suffix_arr = [0] *  (len(pat) + 1)
