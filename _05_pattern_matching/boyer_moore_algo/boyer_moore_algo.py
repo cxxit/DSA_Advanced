@@ -24,7 +24,7 @@ def extended_bad_char_shift_rule(i, r_x):
     Returns:
         _type_: _description_
     """
-    print(f"inside function r_x: {r_x}")
+    # print(f"inside function r_x: {r_x}")
     if r_x == None: # if the letter mismatched in the txt is not in the pat, we shift the len(pat)
         shift_amount = i + 1
 
@@ -122,10 +122,12 @@ def boyer_moore(txt, pat):
 
     while j < len(txt):
         while i>=0:
+            # print(f"Compare: txt[j]: {txt[j]}, pat[i]: {pat[i]}, j: {j}, i: {i}")
             if txt[j] != pat[i]: 
                 break
             j -= 1
             i -= 1
+        # print(f"Mismatch index: j: {j}, i: {i}\n")
         if i >= 0: 
             mistmatch_index_txt = j_start + i
             mistmach_letter_txt = txt[mistmatch_index_txt]
@@ -142,8 +144,9 @@ def boyer_moore(txt, pat):
             j_start = j_start + shift_amount
             j = j_start + len(pat) - 1 
             i = len(pat) - 1
-        else: # i == -1, Case 2: full match is found
-            matched_index_arr.append(j+1)
+        else: # Case 2: full match is found
+
+            matched_index_arr.append(j+1) # convert to 1-based indexing
             shift_amount = len(pat) - matchedprefix_arr[1]
             j_start = j_start + shift_amount
             j = j_start + len(pat) -  1  
@@ -152,12 +155,11 @@ def boyer_moore(txt, pat):
     return matched_index_arr
 
 def boyer_moore_galil(txt, pat): 
-
     return 
 
 if __name__ == "__main__": # runs when you run this python file directly, but not when the file is imported as a module
-    txt = "abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde"
-    pat = "abcdeabcdeabcde"
+    txt = " aabbabababbbbaabaabbabbaa"
+    pat = "aba"
     arr = preprocess_bad_char_shift_data_structure_extended(pat)
     for ele in arr: 
         print(ele)
