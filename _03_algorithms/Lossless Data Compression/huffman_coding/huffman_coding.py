@@ -132,5 +132,6 @@ if __name__ == '__main__':
     huffman_coding = HuffmanCoding(text="A_DEAD_DAD_CEDED_A_BAD_BABE_A_BEADED_ABACA_BED")
     huffman_coding.calculate_frequency()
     print(huffman_coding.get_frequency())
-    huffman_coding.encoding()
-
+    huffman_coding.build_huffman_tree()
+    encoded_stream = huffman_coding.encode()
+    print(encoded_stream)
