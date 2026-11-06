@@ -92,12 +92,27 @@ class HuffmanCoding:
                 self.frequency.append((new_node.text, new_node.frequency))
 
                 self.frequency = sorted(self.frequency, key=lambda item: item[1])
-                print(f"self.frequency2={self.frequency}")
                 # print(f"self.frequency2={self.frequency}")
 
             print(self.get_root().text)
 
 
+
+    def letter_encoding(self, node, code="", encoded_letter=None):
+        # get the coding for each letter, by traversing from root down to leaf
+        if encoded_letter is None:
+            encoded_letter = {}
+        if node is None:
+            return encoded_letter
+
+        if node.left is None and node.right is None:
+            encoded_letter[node.text] = code
+            return encoded_letter
+
+        self.letter_encoding(node.left, code + "0", encoded_letter)
+        self.letter_encoding(node.right, code + "1", encoded_letter)
+
+        return encoded_letter
 
 
     def decoding(self):
