@@ -114,6 +114,15 @@ class HuffmanCoding:
 
         return encoded_letter
 
+    def encode(self):
+        encoded_letter = self.letter_encoding(self.root)
+        print(encoded_letter)
+        encoded_stream=""
+
+        for letter in self.text:
+            encoded_stream+=encoded_letter[letter]
+
+        return encoded_stream
 
     def decoding(self):
         pass
