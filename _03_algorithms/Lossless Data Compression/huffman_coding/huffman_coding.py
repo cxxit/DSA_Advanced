@@ -44,59 +44,32 @@ class HuffmanCoding:
 
         self.frequency = sorted(self.frequency.items(), key=lambda item: item[1]) # O(klogk) - TimSort
 
-    def encoding(self):
+    def build_huffman_tree(self):
             while len(self.frequency) != 0:
-                # print(self.frequency[i])
                 iteration_count = 1
                 node_text = ""
                 new_node = Node(node_text, 0)
                 new_node_freq = 0
 
                 while iteration_count >= 0:
-                    print(f"Iteration {iteration_count}")
-                    print(self.frequency[iteration_count])
+                    # print(f"Iteration {iteration_count}")
+                    # print(self.frequency[iteration_count])
                     node_text = self.frequency[iteration_count][0] + node_text
                     new_node_freq += self.frequency[iteration_count][1]
                     root_node_found = False
                     for root_node in self.trees:
                         if self.frequency[iteration_count][0] == root_node.text:
-                            print("YUMS")
                             if new_node.right is None:
                                 new_node.right = root_node
-                                new_node_right = root_node
                             else:
                                 new_node.left = root_node
-                                new_node_left = root_node
                             root_node_found = True
 
                     if not root_node_found:
                         if new_node.right is None:
-                        #     # check whether the tree root in self.trees has this text
-                        #     root_node_found = False
-                        #     for root_node in self.trees:
-                        #         if self.frequency[iteration_count][0] == root_node.text:
-                        #             print("HAHA")
-                        #             new_node.right = root_node
-                        #             new_node_right = root_node
-                        #             root_node_found = True
-                        #             print(f"new_node.right.text={new_node_right.text}")
-                        #     if root_node_found:
-                        #         break
-                        #     else:
                             new_node_right = Node(self.frequency[iteration_count][0], self.frequency[iteration_count][1])
                             new_node.right = new_node_right
                         else:
-                            # root_node_found = False
-                            # for root_node in self.trees:
-                            #     if self.frequency[iteration_count][0] == root_node.text:
-                            #         print("HEHE")
-                            #         new_node.left = root_node
-                            #         new_node_left = root_node
-                            #         root_node_found = True
-                            # print(f"root_node_found={root_node_found}")
-                            # if root_node_found:
-                            #     break
-                            # else:
                             new_node_left = Node(self.frequency[iteration_count][0], self.frequency[iteration_count][1])
                             new_node.left = new_node_left
 
@@ -105,11 +78,12 @@ class HuffmanCoding:
 
                     iteration_count -= 1
 
-                print(f"node_text={node_text}, new_node_freq={new_node_freq}")
+                # print(f"node_text={node_text}, new_node_freq={new_node_freq}")
                 new_node.text = node_text
                 new_node.frequency = new_node_freq
-                print(f"new_node.text={new_node.text}, new_node.frequency={new_node.frequency}, new_node.left={new_node.left.text}, new_node.right={new_node.right.text}")
+                # print(f"new_node.text={new_node.text}, new_node.frequency={new_node.frequency}, new_node.left={new_node.left.text}, new_node.right={new_node.right.text}")
                 new_tree_root = new_node
+                self.root = new_tree_root
                 self.trees.append(new_tree_root)
 
                 # add the new_tree_root text to the self.frequency list
@@ -119,6 +93,12 @@ class HuffmanCoding:
 
                 self.frequency = sorted(self.frequency, key=lambda item: item[1])
                 print(f"self.frequency2={self.frequency}")
+                # print(f"self.frequency2={self.frequency}")
+
+            print(self.get_root().text)
+
+
+
 
     def decoding(self):
         pass
