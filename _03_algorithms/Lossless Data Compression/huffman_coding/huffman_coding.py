@@ -29,3 +29,18 @@ class HuffmanCoding:
     def get_root(self):
         return self.root
 
+    def calculate_frequency(self):
+        """
+        Function to calculate the frequency of each character in the text
+        Time Complexity: O(n + klogk), where n is the length of the text, klogk is the time taken to sort the frequency dictionary
+        Space Complexity: O(k), where k is the number of unique characters in the text
+        Returns: None
+        """
+        for char in self.text:
+            if char not in self.frequency:
+                self.frequency[char] = 1
+            else:
+                self.frequency[char] += 1
+
+        self.frequency = sorted(self.frequency.items(), key=lambda item: item[1]) # O(klogk) - TimSort
+
