@@ -28,6 +28,7 @@ def elias_omega_encode(n: int) -> str:
 
     return encoded_string
 
+
 def elias_omega_decode(codeword: str) -> int:
     read_length = 1
     pos = 0 # 0-based indexing
@@ -53,8 +54,10 @@ def elias_omega_decode(codeword: str) -> int:
     return int(component, 2)
 
 
-
 if __name__ == '__main__':
     n = 561
+    # n = 16
     encoded_n = elias_omega_encode(n)
     print(f"encoded_n={encoded_n}")
+
+    elias_omega_decode(encoded_n)
