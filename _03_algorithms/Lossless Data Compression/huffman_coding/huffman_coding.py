@@ -150,3 +150,5 @@ if __name__ == '__main__':
     huffman_coding.build_huffman_tree()
     encoded_stream = huffman_coding.encode()
     print(encoded_stream)
+    decoded_stream = huffman_coding.decoding()
+    print(decoded_stream)
