@@ -125,7 +125,22 @@ class HuffmanCoding:
         return encoded_stream
 
     def decoding(self):
-        pass
+        i = 0
+        current_node = self.root
+        encoded_stream = self.encode()
+        decoded_stream = ""
+        while i < len(encoded_stream):
+            if encoded_stream[i] == "0":
+                current_node = current_node.left
+            else:
+                current_node = current_node.right
+
+            if current_node.left is None and current_node.right is None:
+                decoded_stream += current_node.text
+                current_node = self.root
+
+            i += 1
+        return decoded_stream
 
 
 if __name__ == '__main__':
