@@ -55,8 +55,23 @@ def elias_omega_decode(codeword: str) -> int:
 
 
 if __name__ == '__main__':
-    n = 561
+    # n = 561
     # n = 16
+    n = -10
+    is_negative = n <= 0
+    if n <= 0:
+        if n == 0:
+            n = n + 1
+        else:
+            str_n = str(n)
+            print(f"str_n={str_n}")
+            n_dec = str_n[1:]
+            print(f"n_dec={n_dec}")
+
+            # map n <= 0 to (n > 0) + 1
+            n = int(n_dec) + 1
+            print(f"new_n={n}")
+
     encoded_n = elias_omega_encode(n)
     print(f"encoded_n={encoded_n}")
 
