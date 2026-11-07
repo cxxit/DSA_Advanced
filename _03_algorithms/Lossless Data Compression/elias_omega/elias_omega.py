@@ -28,6 +28,30 @@ def elias_omega_encode(n: int) -> str:
 
     return encoded_string
 
+def elias_omega_decode(codeword: str) -> int:
+    read_length = 1
+    pos = 0 # 0-based indexing
+
+    component = codeword[pos:pos + read_length]
+    # print(f"component={component}")
+
+    while component[0] != "1":
+    # if component[0] == 1:
+    #     return int(component, 2)
+    # else:
+        # flip 0 -> 1
+        component = str(1) + component[1:]
+        # print(f"new_component={component}")
+        pos = pos + read_length
+        # print(f"new_pos={pos}")
+        read_length = int(component, 2) + 1
+        # print(f"new_read_length={read_length}")
+        component = codeword[pos:pos + read_length]
+        # print(f"new_component={component}")
+        # print()
+    # print(int(component, 2))
+    return int(component, 2)
+
 
 
 if __name__ == '__main__':
