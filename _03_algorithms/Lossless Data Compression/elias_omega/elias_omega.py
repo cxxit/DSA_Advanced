@@ -28,3 +28,9 @@ def elias_omega_encode(n: int) -> str:
 
     return encoded_string
 
+
+
+if __name__ == '__main__':
+    n = 561
+    encoded_n = elias_omega_encode(n)
+    print(f"encoded_n={encoded_n}")
