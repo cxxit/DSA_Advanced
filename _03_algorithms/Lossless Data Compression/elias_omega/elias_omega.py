@@ -75,4 +75,8 @@ if __name__ == '__main__':
     encoded_n = elias_omega_encode(n)
     print(f"encoded_n={encoded_n}")
 
-    elias_omega_decode(encoded_n)
+    decoded_n = elias_omega_decode(encoded_n)
+    print(f"decoded_n={decoded_n}")
+    if is_negative:
+        new_decoded_n = decoded_n - 1
+        print(f"new_decoded_n={"-" + str(new_decoded_n)}")
